@@ -1,0 +1,226 @@
+<html>
+<header>
+	<title> JOGO DA VELHA </title>
+</header>
+<head>
+	<!-- ************* CÓDIGO EM CSS *********** -->
+	<style type="text/css">
+		body{
+	font-family: Century Gothic;
+	font-size: 50px;
+	text-transform: uppercase;
+	}
+
+	#menu ul {
+    padding:0px;
+    margin:0px;
+    background-color:none;
+    list-style:none;
+	}
+	#menu ul li { display: inline; }
+	
+	#menu ul li a {
+    padding: 7px 7px;
+    display: inline-block;
+
+    /* visual do link */
+    background-color:#000000;
+    color: #FFFFFF;
+    text-decoration: none;
+    border-bottom:3px solid #fc44a3;
+	
+	#menu ul li a:hover {
+    background-color:#D6D6D6;
+    color: #FFFFFF;
+    border-bottom:3px solid #FFFFFF;
+}
+	</style>
+	
+	<!-- ************* CÓDIGO EM JAVASCRIPT *********** -->
+	<script>
+	
+var vetor = [0,0,0,0,0,0,0,0,0];
+var vezDeQuem = true; // SE TRUE É IGUAL A X, SE FALSE É IGUAL A O 
+var gameOver  = false;
+var contagemX = 0; // LIMITE DE JOGADAS
+var verdadeiroContador = 0;
+var contador = 0;
+
+var jogador1
+
+
+  function nomeJogadores(){
+	jogador1 = prompt("Digite o nome do jogador!")
+
+	
+	txtJogador1.value = jogador1
+	txtJogador2.value = "Maquininha top"
+
+  }
+  
+  function limpar(){
+	window.location.reload()
+	//nomeJogadores()
+  }
+ 
+ // FAZENDO A VEz DOS JOGADORES
+ function imagem(id){
+	if (vetor[id] == 0){
+		if (vezDeQuem){
+			vetor[id] = 1;
+			trocarImagem();
+			contagemX++; // toda vez que o x jogar, aumentará um numero. O limite é 5.
+			pcInter()
+		} 
+	}
+	quemGanhou();
+ }
+ 
+ // FAZENDO A TROCA DAS IMAGENS
+function trocarImagem(){
+	for (i=0; i < 9; i++){
+		if (vetor[i] == 0){
+			document.getElementById(i).src='fundo.png'
+		}else if (vetor[i] == 1){
+			document.getElementById(i).src='x.png'
+		}else {
+			document.getElementById(i).src='o.png'
+		}
+	}
+}
+
+function quemGanhou(){
+
+	// POSSIBILIDADES DA VITORIA DO X
+	if (vetor[0] == 1 && vetor[1] == 1 && vetor[2] == 1 || vetor[3] == 1 && vetor[4] == 1 && vetor[5] == 1 || vetor[6] == 1 && vetor[7] == 1 && vetor[8] == 1){
+		alert("Parabéns " + jogador1 + ", você ganhou!!")
+		gameOver = true;
+	}else if (vetor[0] == 1 && vetor[3] == 1 && vetor[6] == 1 || vetor[1] == 1 && vetor[4] == 1 && vetor[7] == 1 ||  vetor[2] == 1 && vetor[5] == 1 && vetor[8] == 1){
+		alert("Parabéns " + jogador1 + ", você ganhou!!")
+		gameOver = true;
+	} else if (vetor[0] == 1 && vetor[4] == 1 && vetor[8] == 1 || vetor[6] == 1 && vetor[4] == 1 && vetor[2] == 1){
+		alert("Parabéns " + jogador1 + ", você ganhou!!")
+		gameOver = true;
+	}
+
+	// POSSIBILIDADES DA VITORIA DO O
+	else if (vetor[0] == 2 && vetor[1] == 2 && vetor[2] == 2 || vetor[3] == 2 && vetor[4] == 2 && vetor[5] == 2 ||  vetor[6] == 2 && vetor[7] == 2 && vetor[8] == 2){
+		alert("Parabéns Maquininha Top, você ganhou!!")
+		gameOver = true;
+	}else if (vetor[0] == 2 && vetor[3] == 2 && vetor[6] == 2 || vetor[1] == 2 && vetor[4] == 2 && vetor[7] == 2 ||  vetor[2] == 2 && vetor[5] == 2 && vetor[8] == 2){
+		alert("Parabéns Maquininha Top, você ganhou!!")
+		gameOver = true;
+	} else if(vetor[0] == 2 && vetor[4] == 2 && vetor[8] == 2 || vetor[6] == 2 && vetor[4] == 2 && vetor[2] == 2){
+		alert("Parabéns Maquininha Top, você ganhou!!")
+		gameOver = true;
+	}
+	
+	//VERIFICAR SE DEU VELHA
+	else if (contagemX == 5){
+		alert("XIIIIIIII! DEU VELHA.")
+	}
+}
+
+function pcInter(){
+	verdadeiroContador = verdadeiroContador + 1
+	
+		// vetor verifica o numero gerado automaticamente pelo math
+		if(verdadeiroContador < 5){
+			contador = (Math.floor(Math.random() * 9 + 1)) - 1
+				while(vetor[contador] != 0){
+					contador = (Math.floor(Math.random() * 9 + 1)) - 1
+				}
+		
+		
+		
+		vetor[contador] = 2
+		trocarImagem()
+		quemGanhou()
+
+}
+
+		</script>
+</head>
+		<!-- ************* CÓDIGO EM HTML *********** -->
+		<body background="fundo.jpg" leftmargin="0" topmargin="20" rightmargin="0" bottommargin="0" onload="nomeJogadores()"> <!-- Caixa principal-->
+			<table width="700" height="800" border="0" bordercolor="black" align="center" bgcolor="#ffffff"> <!-- table principal -->
+				<!-- nome dos jogadores -->
+				<tr height="20%" bgcolor="#000000">
+					<td>
+						<table width="100%" height="100%" border="0" align="center">
+						<tr height="30%" valign="bottom" >
+							<td width="50%" align="center" colspan="2" valign="middle">
+							 <!-- NOME DO Nivel -->
+								<br><font size="4" color="#fff"><b> JOGADOR VS JOGADOR </b></font>
+							</td>
+						</tr>
+						<tr height="70%" align="center" valign="middle">
+							<td> <!-- BOTÃO INICIO-->
+								<br><font color="white"><b>X: </b></font><input type="text" value="" id="txtJogador1"/><br>
+							</td>
+							<td>
+								<br><font color="white"><b>O: </b></font><input type="text" value="" id="txtJogador2"/>
+							</td>
+						</tr>
+						</table>
+					</td>
+				</tr>
+				<!-- jogo -->
+				<tr height="75%">
+					<td>
+						<table  width="100%" height="100%" border="5" >
+									<tr height="34%">
+										<td width="33%" align="center" >
+											<img id="0" src="fundo.png" width="220" height="205" onclick="imagem(0)" >
+										</td>
+										
+										<td width="33%" align="center">
+											<img id="1" src="fundo.png" width="220" height="205" onclick="imagem(1)" >
+										</td>
+										
+										<td width="33%" align="center">
+											<img id="2" src="fundo.png" width="220" height="205" onclick="imagem(2)" >
+										</td>
+									</tr>
+									
+									<tr height="33%" >
+										<td width="33%" align="center">
+											<img id="3" src="fundo.png" width="220" height="205" onclick="imagem(3)" >
+										</td>
+										
+										<td width="33%" align="center">
+											<img id="4" src="fundo.png" width="220" height="205" onclick="imagem(4)" >
+										</td>
+										
+										<td width="33%" align="center">
+											<img id="5" src="fundo.png" width="220" height="205" onclick="imagem(5)" >
+										</td>
+									</tr >
+									
+									<tr height="33%">
+										<td width="33%" align="center" >
+											<img id="6" src="fundo.png" width="220" height="205" onclick="imagem(6)" >
+										</td>
+										
+										<td width="33%" align="center" >
+											<img id="7" src="fundo.png" width="220" height="205" onclick="imagem(7)" >
+										</td>
+										
+										<td width="33%" align="center">
+											<img id="8" src="fundo.png" width="220" height="205" onclick="imagem(8)" >
+										</td>
+									</tr>
+								</table>
+					</td>
+				</tr>
+				<tr height="5%" align="center">
+					<td>
+						<input type="button" name="limpar" value="REINICIAR" onclick="limpar()" />
+						<a href="home.html"><input type="button" name="novojogo" value="NOVO JOGO" />
+					
+					</td>
+				</tr>
+				
+			</table>
+		</body>
+</html>
